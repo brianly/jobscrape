@@ -6,6 +6,7 @@ from jinja2 import Environment
 from jinja2.loaders import FileSystemLoader
 
 def utf8_html(text):
+    """FIXME: Unicodeycorns"""
     return unicode(text).encode("utf-8")
 
 def render_template(data, template_name, filters=None):
