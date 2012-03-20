@@ -1,9 +1,23 @@
 #!/usr/bin/env python
 import requests
+
 from bs4 import BeautifulSoup
+from jinja2 import Environment
+from jinja2.loaders import FileSystemLoader
 
 def utf8_html(text):
     return unicode(text).encode("utf-8")
+
+def render_template(data, template_name, filters=None):
+    """Render data using a jinja2 template"""
+    env = Environment(loader=FileSystemLoader(''))
+
+    if filters is not None:
+        for key, value in filters.iteritems():
+            env.filters[key] = value
+
+    template = env.get_template(template_name)
+    return template.render(jobs=data).encode('utf-8')
 
 def get_description(url):
     """Fetch the details for a job posting"""
@@ -73,4 +87,4 @@ for posting in postings:
 
     jobs.append(job)
 
-print jobs
+print render_template(jobs, 'job.tmpl')
