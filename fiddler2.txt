@@ -1,0 +1,15 @@
+Example request for IT jobs:
+
+POST http://jobs.astrazeneca.com/results HTTP/1.1
+Accept: text/html, application/xhtml+xml, */*
+Referer: http://jobs.astrazeneca.com/
+Accept-Language: en-US
+User-Agent: Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)
+Content-Type: application/x-www-form-urlencoded
+Accept-Encoding: gzip, deflate
+Host: jobs.astrazeneca.com
+Content-Length: 102
+Proxy-Connection: Keep-Alive
+Pragma: no-cache
+
+search-type=category&sort-type=date&country-id=&location-id=&category-id=16%2C50&city-id=&results_hid=
