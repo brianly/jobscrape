@@ -1,0 +1,15 @@
+callback1001(
+{
+	"items":
+    [
+        {% for job in jobs %}
+        {
+            "text": "{{ job['title'] }}",
+            "id": "{{ job['number'] }}",
+            "strapline": "date",
+            "info": "{{ job['description'] }}",
+            "leaf": "true"
+        },
+        {% endfor %}
+	]
+}	);
