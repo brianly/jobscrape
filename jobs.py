@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import requests
+from bs4 import BeautifulSoup
 
 payload = {
     'search-type': 'category',
@@ -26,49 +27,31 @@ html = unicode(r.text).encode("utf-8")
 
 #print html
 
-from bs4 import BeautifulSoup
 soup = BeautifulSoup(html)
 
 result_count = soup.findAll('div', { "class" : "results_heading" })
 print 'Result Count Soup'
-print result_count
+print 'There are %s postings' % result_count
 
 postings = soup.findAll('div', { "class": "results_list_item"})
-print len(postings)
-
+print 'There are %s postings' % len(postings)
 
 print
 print
 for posting in postings:
     results_list_date = posting.find('div', {"class": "results_list_date"})
-    print results_list_date
+    print results_list_date.getText().strip()
 
     job_number = posting.find('div', {"class": "job_number"})
-    print job_number
+    print job_number.getText().strip()
 
     job_info = posting.find('div', {"class": "job_info"})
-    job_info = posting.find('h2')
-    print job_info
+    job_title = posting.find('h2')
+    print job_title.getText().strip()
 
+    job_url = job_title.find('a')
+    print job_url['href']
 
-
-#    results_list_date = posting.find('div', {"class": "results_list_date"})
-#    print results_list_date
-#
-#    results_list_date = posting.find('div', {"class": "results_list_date"})
-#    print results_list_date
-
-#    job = soup.findAll('div', {"class": "job_info"})
-#    print job
-
-#    jbo = dir(posting)
-#    for x in jbo:
-#        print x
-    exit()
     print
     print '~~~~~~~~~~~~~'
     print
-#    print posting.findAll('div', { "class": "results_list_details"})
-
-#for posting in postings.find_next('a'):
-#    print posting
