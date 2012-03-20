@@ -1,4 +1,4 @@
-Example request for IT jobs:
+Example request for all IS jobs captured using Fiddler. This is the request that needs to be replicated f
 
 POST http://jobs.astrazeneca.com/results HTTP/1.1
 Accept: text/html, application/xhtml+xml, */*

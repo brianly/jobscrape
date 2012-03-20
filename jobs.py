@@ -2,10 +2,13 @@
 import requests
 from bs4 import BeautifulSoup
 
+def utf8_html(text):
+    return unicode(text).encode("utf-8")
+
 def get_description(url):
     """Fetch the details for a job posting"""
     r = requests.get(url)
-    html = unicode(r.text).encode("utf-8")
+    html = utf8_html(r.text)
 
     soup = BeautifulSoup(html)
     description = soup.findAll('div', { "class": "job_description"})
@@ -30,11 +33,11 @@ payload = {
     'location-id': '',
     'category-id': '16,50',
     'city-id=': '',
-    'results_hid': ''
+    'results_hid': '30'
 }
 
 r = requests.post("http://jobs.astrazeneca.com/results", headers)
-html = unicode(r.text).encode("utf-8")
+html = utf8_html(r.text)
 
 soup = BeautifulSoup(html)
 
@@ -44,26 +47,30 @@ print 'There are %s total postings' % result_count[0].find('span').getText()
 postings = soup.findAll('div', { "class": "results_list_item"})
 print 'There are %s postings on this page' % len(postings)
 
-print
+jobs = []
 
 for posting in postings:
+    # Find the job listing date
     results_list_date = posting.find('div', {"class": "results_list_date"})
-    print results_list_date.getText().strip()
 
+    # Find the job number
     job_number = posting.find('div', {"class": "job_number"})
-    print job_number.getText().strip()
 
+    # Find the title
     job_info = posting.find('div', {"class": "job_info"})
     job_title = posting.find('h2')
-    print job_title.getText().strip()
 
+    # Use title to get URL to description
     job_url = job_title.find('a')
-    print job_url['href']
-
     job_description = get_description(job_url['href'])
-    print job_description
 
-    print
-    print '~~~~~~~~~~~~~'
-    print
+    job = {
+        'date': results_list_date.getText().strip(),
+        'number': job_number.getText().strip(),
+        'title': job_title.getText().strip(),
+        'description': get_description(job_url['href'])
+    }
 
+    jobs.append(job)
+
+print jobs
