@@ -2,15 +2,16 @@
 import requests
 from bs4 import BeautifulSoup
 
-payload = {
-    'search-type': 'category',
-    'sort-type': 'date',
-    'country-id': '',
-    'location-id': '',
-    'category-id': '16,50',
-    'city-id=': '',
-    'results_hid': ''
-}
+def get_description(url):
+    """Fetch the details for a job posting"""
+    r = requests.get(url)
+    html = unicode(r.text).encode("utf-8")
+
+    soup = BeautifulSoup(html)
+    description = soup.findAll('div', { "class": "job_description"})
+
+    return description[0].getText().strip()
+
 
 headers = {
     'Referer': 'http://jobs.astrazeneca.com/',
@@ -20,6 +21,16 @@ headers = {
     'Accept-Encoding': 'gzip, deflate',
     'Pragma': 'no-cache',
     'Accept-Language': 'Accept-Language'
+}
+
+payload = {
+    'search-type': 'category',
+    'sort-type': 'date',
+    'country-id': '',
+    'location-id': '',
+    'category-id': '16,50',
+    'city-id=': '',
+    'results_hid': ''
 }
 
 r = requests.post("http://jobs.astrazeneca.com/results", headers)
@@ -49,6 +60,10 @@ for posting in postings:
     job_url = job_title.find('a')
     print job_url['href']
 
+    job_description = get_description(job_url['href'])
+    print job_description
+
     print
     print '~~~~~~~~~~~~~'
     print
+
