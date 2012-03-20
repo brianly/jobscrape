@@ -26,7 +26,6 @@ html = unicode(r.text).encode("utf-8")
 
 #print html
 
-
 from bs4 import BeautifulSoup
 soup = BeautifulSoup(html)
 
@@ -37,5 +36,22 @@ print result_count
 postings = soup.findAll('div', { "class": "results_list_item"})
 print len(postings)
 
+
+print
+print
 for posting in postings:
-    print posting.findAll('div', { "class": "results_list_details"})
+#    print dir(posting)
+#    exit()
+    soup = BeautifulSoup(posting.text)
+    print posting
+
+    nex = soup.findAll('div', {"class": "job_info"})
+    print nex
+
+    print
+    print '~~~~~~~~~~~~~'
+    print
+#    print posting.findAll('div', { "class": "results_list_details"})
+
+#for posting in postings.find_next('a'):
+#    print posting
