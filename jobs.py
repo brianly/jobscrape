@@ -25,19 +25,16 @@ headers = {
 r = requests.post("http://jobs.astrazeneca.com/results", headers)
 html = unicode(r.text).encode("utf-8")
 
-#print html
-
 soup = BeautifulSoup(html)
 
 result_count = soup.findAll('div', { "class" : "results_heading" })
-print 'Result Count Soup'
-print 'There are %s postings' % result_count
+print 'There are %s total postings' % result_count[0].find('span').getText()
 
 postings = soup.findAll('div', { "class": "results_list_item"})
-print 'There are %s postings' % len(postings)
+print 'There are %s postings on this page' % len(postings)
 
 print
-print
+
 for posting in postings:
     results_list_date = posting.find('div', {"class": "results_list_date"})
     print results_list_date.getText().strip()
