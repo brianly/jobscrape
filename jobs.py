@@ -40,14 +40,31 @@ print len(postings)
 print
 print
 for posting in postings:
-#    print dir(posting)
-#    exit()
-    soup = BeautifulSoup(posting.text)
-    print posting
+    results_list_date = posting.find('div', {"class": "results_list_date"})
+    print results_list_date
 
-    nex = soup.findAll('div', {"class": "job_info"})
-    print nex
+    job_number = posting.find('div', {"class": "job_number"})
+    print job_number
 
+    job_info = posting.find('div', {"class": "job_info"})
+    job_info = posting.find('h2')
+    print job_info
+
+
+
+#    results_list_date = posting.find('div', {"class": "results_list_date"})
+#    print results_list_date
+#
+#    results_list_date = posting.find('div', {"class": "results_list_date"})
+#    print results_list_date
+
+#    job = soup.findAll('div', {"class": "job_info"})
+#    print job
+
+#    jbo = dir(posting)
+#    for x in jbo:
+#        print x
+    exit()
     print
     print '~~~~~~~~~~~~~'
     print
