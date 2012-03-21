@@ -38,7 +38,10 @@ headers = {
     'User-Agent': 'Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 6.1; WOW64; Trident/5.0)',
     'Accept-Encoding': 'gzip, deflate',
     'Pragma': 'no-cache',
-    'Accept-Language': 'Accept-Language'
+    'Accept-Language': 'en-US',
+    'Content-Length': '102',
+    'Proxy-Connection': 'Keep-Alive',
+    'Host': 'jobs.astrazeneca.com',
 }
 
 payload = {
@@ -51,7 +54,7 @@ payload = {
     'results_hid': '30'
 }
 
-r = requests.post("http://jobs.astrazeneca.com/results", headers)
+r = requests.post("http://jobs.astrazeneca.com/results", data=payload, headers=headers)
 html = utf8_html(r.text)
 
 soup = BeautifulSoup(html)
