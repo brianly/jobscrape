@@ -10,7 +10,7 @@ that will do this automatically but this is simple for non-developer to tweak.
 [BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) is used to extract useful parts from the document.
 
 It is best to use a [virtualenv](http://www.virtualenv.org/en/latest/index.html) for managing dependencies. Anyone who
-already knows about this tool shouldn't have a problem with the running this.
+already knows about this tool shouldn't have a problem with installing the required libraries.
 
 Dependencies on Linux
 ---------------------
