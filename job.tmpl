@@ -4,12 +4,12 @@ callback1001(
     [
         {% for job in jobs %}
         {
-            "text": "{{ job['title'] }}",
+            "text": "{{ job['title']|e }}",
             "id": "{{ job['number'] }}",
-            "strapline": "date",
-            "info": "{{ job['description'] }}",
+            "strapline": "{{ job['date'] }}",
+            "info": "{{ job['description']|e }}",
             "leaf": "true"
         },
         {% endfor %}
 	]
-}	);
+});
