@@ -18,6 +18,7 @@ def render_template(data, template_name, filters=None):
             env.filters[key] = value
 
     template = env.get_template(template_name)
+
     return template.render(jobs=data).encode('utf-8')
 
 def get_description(url):
@@ -28,7 +29,7 @@ def get_description(url):
     soup = BeautifulSoup(html)
     description = soup.findAll('div', { "class": "job_description"})
 
-    return description[0].getText().strip()
+    return description[0]
 
 
 headers = {
@@ -91,4 +92,7 @@ for posting in postings:
 
     jobs.append(job)
 
-print render_template(jobs, 'job.tmpl')
+result = render_template(jobs, 'job.tmpl')
+
+with open('jobs.json', 'w') as output:
+    output.write(result)
