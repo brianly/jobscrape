@@ -3,10 +3,11 @@ AZ Job Scraper
 
 This is a simple tool written in Python showing how a job site that only supports queries using POST can be scraped. Unfortunately,
 the results are returned in HTML format with sections only identified by CSS classes so we have to do some work to get the data
-we need.
+we need. Once we have the data we use a jinja2 template to output in the JSON format required. There are probably libraries
+that will do this automatically but this is simple for non-developer to tweak.
 
 [Requests](http://docs.python-requests.org) is used to pull down results from the site, and
-[BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) is used to extract these sections.
+[BeautifulSoup](http://www.crummy.com/software/BeautifulSoup/) is used to extract useful parts from the document.
 
 It is best to use a [virtualenv](http://www.virtualenv.org/en/latest/index.html) for managing dependencies. Anyone who
 already knows about this tool shouldn't have a problem with the running this.
@@ -41,3 +42,14 @@ Next install the dependencies using pip:
 
 Usage
 -----
+
+To return output to the console run:
+
+    python jobs.py
+
+To output to a file execute:
+
+    python jobs.py > output.json
+
+Neither of these options is very good for handling non-ASCII pages so a future update will fix that and allow you
+specify an output file without going through the console.
