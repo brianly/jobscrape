@@ -7,8 +7,10 @@ callback1001(
             "text": "{{ job['title']|e }}",
             "id": "{{ job['number'] }}",
             "strapline": "{{ job['date'] }}",
-            "info": "{{ job['description']|e }}",
-            "leaf": "true"
+            "info": "{{ job['description'] }}",
+            "url": "{{ job['url'] }}",
+            "leaf": "true",
+            "model": "job"
         },
         {% endfor %}
 	]

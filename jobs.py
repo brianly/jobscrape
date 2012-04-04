@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+import re
 import requests
 
 from bs4 import BeautifulSoup
@@ -11,7 +12,7 @@ def utf8_html(text):
 
 def render_template(data, template_name, filters=None):
     """Render data using a jinja2 template"""
-    env = Environment(loader=FileSystemLoader(''))
+    env = Environment(loader=FileSystemLoader('/home/brianly/sites/blweb/jobscrape/'))
 
     if filters is not None:
         for key, value in filters.iteritems():
@@ -83,16 +84,28 @@ for posting in postings:
     job_url = job_title.find('a')
     job_description = get_description(job_url['href'])
 
+    full_desc = unicode(get_description(job_url['href']))
+
+    full_desc = full_desc.replace('<div class="job_description">\n', '<div><p>')
+    full_desc = full_desc.replace('<div style="font-size:4px">', '<div>')
+    full_desc = re.sub('<div>\s(.*)\s</div>', '', full_desc)
+    full_desc = full_desc.replace(u'<div>\xa0</div>', '</p></p>')
+    full_desc = full_desc.replace("</div>", "</p></div>")
+    full_desc = full_desc.replace("* ", "<br />* ")
+
     job = {
         'date': results_list_date.getText().strip(),
         'number': job_number.getText().strip(),
         'title': job_title.getText().strip(),
-        'description': get_description(job_url['href'])
+        'description': full_desc,
+        'url': unicode(job_url['href'])
     }
+
+    # job['description'] = job['description'].replace("<div style=\"font-size:4px\"> </div>", "</p><p>")
 
     jobs.append(job)
 
 result = render_template(jobs, 'job.tmpl')
 
-with open('jobs.json', 'w') as output:
+with open('/home/brianly/sites/blweb/www/downloads/parker/jobs.json', 'w') as output:
     output.write(result)
